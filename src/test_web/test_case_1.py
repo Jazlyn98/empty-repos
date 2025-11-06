@@ -7,6 +7,9 @@ from selenium.webdriver.support.ui import Select
 
 chrome_option= webdriver.ChromeOptions()
 driver= webdriver.Chrome(chrome_option)
+
+#test case 1: verify login function
+
 sleep(1)
 driver.get ("https://www.staging.littlelives.com/signin")
 sleep(3)
@@ -41,6 +44,7 @@ sleep(5)
 expected_title ="Dashboard"
 assert expected_title in driver.title, "Đăng nhập thất bại, tiêu đề không khớp"
 print ("SUCCESS")
+#test
 ori_windown= driver.current_window_handle
 assert len (driver.window_handles) ==1, print (f"assert isWindowsNumberPassed FAILED")
 print ("PASSED")
