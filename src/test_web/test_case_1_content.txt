@@ -1,0 +1,9 @@
+* Test Case: Verify user can view cinemas and movies in Da Nang on Moveek*
+Navigate to the Moveek homepage > Verify Moveek homepage is displayed successfully
+Click on the “Rạp” dropdown arrow > Verify A modal-content is displayed
+In the search box, type “Đà Nẵng” > Verify “Đà Nẵng” option is displayed in the location list
+Select “Đà Nẵng” from the list > Verify All cinemas in Đà Nẵng are displayed
+Select “Metiz Cinema” from the list > Verify The Metiz Cinema page is displayed
+Select a date on the movie schedule > Print the selected date > Verify Selected date is printed 
+Get the name of the first movie in the list and print it > Verify The movie name is printed 
+Select the earliest available time
