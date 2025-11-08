@@ -68,10 +68,8 @@ for movie in first_movie:
 sleep(2)
 
 #Select the earliest available time
-# locate the firsr movie
-time_container = movie.find_element(By.XPATH, "//*[@id='showtimes']/div/div[2]/div/div/div[2]/div/div") #ko bk rút gọn dong nay
-# Get all time
-time_slots = time_container.find_elements(By.XPATH, ".//span[contains(@class,'time')]")
+time_container = movie.find_element(By.XPATH, "//*[@id='showtimes']/div/div[2]/div/div/div[2]/div/div") # locate the firsr movie
+time_slots = time_container.find_elements(By.XPATH, ".//span[contains(@class,'time')]") # Get all time
 
 if time_slots:
     earliest_time = time_slots[0].text.strip()  # get the text of the first time
