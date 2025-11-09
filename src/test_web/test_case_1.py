@@ -9,12 +9,13 @@ chrome_option= webdriver.ChromeOptions()
 driver= webdriver.Chrome(chrome_option)
 
 driver.get ("https://moveek.com/")
+driver.set_window_size(1024, 800)
 sleep(3)
 print (f"main_title:{driver.title}")
-sleep(3)
+sleep(10)
 
 #Click on the “Rạp” dropdown arrow
-dropdown_cinames= driver.find_element(By.XPATH,"//a[@href='/rap/']")
+dropdown_cinames= driver.find_element(By.XPATH,'//*[@id="navbar"]//a[@href="/rap/"]')
 dropdown_cinames.click()
 sleep(5)
 modal = driver.find_element(By.XPATH, "//div[@id='cinemaModal']//div[@class='modal-content']")
@@ -60,7 +61,7 @@ for date in selected_date:
 sleep(2)
 
 #Get the name of the first movie in the list
-first_movie= driver.find_elements(By.XPATH,"//div[2]/div/div/div[2]/h4[@class='card-title mb-1 name']/a") #ko bk rút gọn hơn
+first_movie= driver.find_elements(By.XPATH,'//*[@id="app"]//h4[@class="card-title mb-1 name"]/a') #ko bk rút gọn hơn
 for movie in first_movie:
     movie_name= movie.text
     print (f"first movie name:{movie_name}")
@@ -68,12 +69,13 @@ for movie in first_movie:
 sleep(2)
 
 #Select the earliest available time
-time_container = movie.find_element(By.XPATH, "//*[@id='showtimes']/div/div[2]/div/div/div[2]/div/div") # locate the firsr movie
-time_slots = time_container.find_elements(By.XPATH, ".//span[contains(@class,'time')]") # Get all time
+time_container = movie.find_element(By.XPATH, "//*[@id='showtimes']//div[@class='mb-1']") # locate the firsr movie
+time_list = time_container.find_elements(By.XPATH, ".//span[contains(@class,'time')]") # Get all time
 
-if time_slots:
-    earliest_time = time_slots[0].text.strip()  # get the text of the first time
-    print(f"Earliest showtime: {earliest_time}")  
-    time_slots[0].click()  
+if time_list:
+    earliest_time = time_list[0].text.strip()  # get the text of the first time
+    print(f"Earliest showtime: {earliest_time}")
+    earliest_time_link = time_list[0].find_element(By.XPATH, './parent::a') # need to get parent element
+    earliest_time_link.click()
 sleep(3)
   
