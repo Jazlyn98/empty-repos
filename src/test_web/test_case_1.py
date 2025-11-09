@@ -61,7 +61,7 @@ for date in selected_date:
 sleep(2)
 
 #Get the name of the first movie in the list
-first_movie= driver.find_elements(By.XPATH,'//*[@id="app"]//h4[@class="card-title mb-1 name"]/a') #ko bk rút gọn hơn
+first_movie= driver.find_elements(By.XPATH,'//*[@id="app"]//h4[@class="card-title mb-1 name"]/a')
 for movie in first_movie:
     movie_name= movie.text
     print (f"first movie name:{movie_name}")
@@ -76,6 +76,24 @@ if time_list:
     earliest_time = time_list[0].text.strip()  # get the text of the first time
     print(f"Earliest showtime: {earliest_time}")
     earliest_time_link = time_list[0].find_element(By.XPATH, './parent::a') # need to get parent element
-    earliest_time_link.click()
+    try:
+     earliest_time_link.click()
+     print("Clicked the earliest showtime today.")
+    except Exception:
+        print("Earliest showtime today has passed — cannot click")
 sleep(3)
-  
+
+#get the earliest time of the next day (tomorrow)
+tomorrow = driver.find_element(By.XPATH,'//*[@id="dates"]/a[2]')
+tomorrow.click()
+sleep(3)
+#Get back the showtime list after moving to tomorrow
+time_container = movie.find_element(By.XPATH, "//*[@id='showtimes']//div[@class='mb-1']")
+time_list = time_container.find_elements(By.XPATH, ".//span[contains(@class,'time')]")
+if time_list:
+    earliest_time_link = time_list[0].find_element(By.XPATH, './parent::a') 
+    earliest_time_link.click()
+    print("Clicked the earliest showtime tomorrow")
+sleep(3)
+
+    

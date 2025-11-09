@@ -7,3 +7,4 @@ Select “Metiz Cinema” from the list > Verify The Metiz Cinema page is displa
 Select a date on the movie schedule > Print the selected date > Verify Selected date is printed 
 Get the name of the first movie in the list and print it > Verify The movie name is printed 
 Select the earliest available time.
+get the earliest time of the next day (tomorrow)
