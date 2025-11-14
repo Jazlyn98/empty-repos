@@ -22,5 +22,3 @@ Nên bổ sung driver.set_window_size(1024, 800) để nó luôn cho cái màn h
 
 2. Khi dùng XPATH thì nên dùng ngoặc đơn ở ngoài, ngoặc kép ở trong. Vì khi copy từ F12 về thì nó luôn dùng "" ở trong, mình đỡ mất công phải đổi thành '' cho từng cái, phí time.
 VD: first_movie= driver.find_elements(By.XPATH,'//*[@id="app"]//h4[@class="card-title mb-1 name"]/a') sẽ tốt hơn là (By.XPATH,"//*[@id='app']//h4[@class='card-title mb-1 name']/a"
-
-A dùng nick hughnguyen để dùng à. em thấy cả trên vs code và git đều có tên hugh. bà lơn rk cha. 
