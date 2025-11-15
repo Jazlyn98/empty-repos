@@ -2,11 +2,12 @@ Test case 1:
 1. first_movie= driver.find_elements(By.XPATH,"//div[2]/div/div/div[2]/h4[@class='card-title mb-1 name']/a")--> ko bk rút gọn hơn
 +first_movie= driver.find_elements(By.XPATH,'//*[@id="app"]//h4[@class="card-title mb-1 name"]/a')
 ==> Chỗ này nếu dùng id thì tại sao ko dùng id='showtimes', nó gần hơn. Nhưng nếu rút gọn như anh thì nó đang lấy sai, nó lấy tên của phim sắp chiếu chứ không phải phim đầu tiên. khi ctrl f thì xpath đó là chung chứ ko phải duy nhất thèn đầu tiên.
-
++ Updated
 
 2. time_container = movie.find_element(By.XPATH, "//*[@id='showtimes']/div/div[2]/div/div/div[2]/div/div") --> ko bk rút gọn dong nay
 + time_container = movie.find_element(By.XPATH, "//*[@id='showtimes']//div[@class='mb-1']")
 ==> cái ni tương tự là xpath chung luôn, nó ko duy nhất, nhưng nó vẫn chạy đúng, là sao? 
++ Updated
 
 3. time_slots[0].click()  --> ko chọn đươc giwof, lỗi
 + Vì cái time_slots[0] là tag <span> chớ ko phải tag <a> nên ko click đc. Cái time_slots là đang lấy 1 list các tag <span>.
