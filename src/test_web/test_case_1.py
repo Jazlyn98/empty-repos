@@ -34,9 +34,8 @@ child_elements = select_box.find_elements(By.XPATH, ".//*")
 # You can iterate through the child_elements list
 for child in child_elements:
     if child.text == "Đà Nẵng":
-        print(f"3333333 city: {child.text}")
+        print(f" city: {child.text}")
         child.click()
-
 sleep(3)
 
 #All cinemas in Đà Nẵng are displayed
@@ -80,22 +79,26 @@ try:
 except Exception:
     print("Earliest showtime today has passed — cannot click")
     print("try tomorrow")
-    #get the earliest time of the next day (tomorrow)
-    tomorrow = showtimes_element.find_elements(By.XPATH,'.//div[@id="dates"]/a[2]') # a[1] is the first date in list, a[2] is tomorrow
-    tomorrow.click()
-    sleep(3)
-    #Get back the showtime list after moving to tomorrow
-    first_movie_tomorrow= showtimes_element.find_element(By.XPATH,'.//div[3]')
-    # get first movie again, because element change and tomorrow movies list may change
-    time_list_tomorrow = first_movie_tomorrow.find_element(By.XPATH, './/a[contains(@class, "showtime")]') # locate the first showtime of first movie
-    earliest_time_tomorrow = time_list_tomorrow[0]
-    print(f"Earliest showtime tomorrow: {earliest_time_tomorrow.text.strip()}")
-    try:
-        earliest_time_tomorrow.click()
-        print("Clicked the earliest showtime tomorrow.")
-    except Exception:
-        print("Error — cannot click")
-    sleep(3)
+    
+#get the earliest time of the next day (tomorrow)
+tomorrow = showtimes_element.find_element(By.XPATH,'.//div[@id="dates"]/a[2]') # a[1] is the first date in list, a[2] is tomorrow
+tomorrow.click()
+sleep(3)
+    
+#Get back the showtime list after moving to tomorrow
+showtimes_element = driver.find_element(By.XPATH,'//*[@id="showtimes"]/div')
+first_movie_tomorrow= showtimes_element.find_element(By.XPATH,'.//div[3]')
+sleep(2)
+
+# get first movie again, because element change and tomorrow movies list may change
+time_list_tomorrow = first_movie_tomorrow.find_elements(By.XPATH, './/a[contains(@class, "showtime")]') # locate the first showtime of first movie
+earliest_time_tomorrow = time_list_tomorrow[0]
+print(f"Earliest showtime tomorrow: {earliest_time_tomorrow.text.strip()}")
+try:
+    earliest_time_tomorrow.click()
+    print("Clicked the earliest showtime tomorrow.")
+except Exception:
+    print("Error — cannot click")
 sleep(3)
 
 driver.quit() # always have this to quit the test correctly
