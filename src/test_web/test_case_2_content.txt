@@ -1,0 +1,11 @@
+* Test Case: Verify movies that are showing
+Click on the “Movie” dropdown arrow > Verify all expected options appear
+Select "Now showing" option > Verify page loads successfully
+In the “Latest” dropdown, click and verify user can select any option
+In the “Act” dropdown, click and verify user can select an option
+In the “Language” dropdown, click and verify user can select an option
+Scroll and print out the list of upcoming movies
+Select the second movie in the list > Navigate to the movie detail page of the second movie
+In the theater list, select CGV > The CGV cinema system displays correctly
+Select CGV Vincom and view theater information
+
