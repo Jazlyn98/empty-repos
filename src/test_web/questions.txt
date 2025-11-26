@@ -1,4 +1,4 @@
-Test case 1:
+*Test case 1:*
 1. first_movie= driver.find_elements(By.XPATH,"//div[2]/div/div/div[2]/h4[@class='card-title mb-1 name']/a")--> ko bk rút gọn hơn
 +first_movie= driver.find_elements(By.XPATH,'//*[@id="app"]//h4[@class="card-title mb-1 name"]/a')
 ==> Chỗ này nếu dùng id thì tại sao ko dùng id='showtimes', nó gần hơn. Nhưng nếu rút gọn như anh thì nó đang lấy sai, nó lấy tên của phim sắp chiếu chứ không phải phim đầu tiên. khi ctrl f thì xpath đó là chung chứ ko phải duy nhất thèn đầu tiên.
@@ -23,7 +23,20 @@ Nên bổ sung driver.set_window_size(1024, 800) để nó luôn cho cái màn h
 
 + Khi dùng XPATH thì nên dùng ngoặc đơn ở ngoài, ngoặc kép ở trong. Vì khi copy từ F12 về thì nó luôn dùng "" ở trong, mình đỡ mất công phải đổi thành '' cho từng cái, phí time.
 VD: first_movie= driver.find_elements(By.XPATH,'//*[@id="app"]//h4[@class="card-title mb-1 name"]/a') sẽ tốt hơn là (By.XPATH,"//*[@id='app']//h4[@class='card-title mb-1 name']/a"
+==============================
+*Test case 2:*
+1. không làm đc phần language
+2. ko lấy list movie đúng--> ko click phim 2
+3. phần phía dưới viết nhưng chưa chạy đúng hoàn toàn vì bị stuck bởi những lỗi sai ở trên, nên sai thì sửa lun
+4. check phần rút gọn vì thấy rút khá phèn, mặc dù cũng ra đúng
 
-4. child_elements = select_box.find_elements(By.XPATH, ".//*") 
-chỗ này là đang lấy element của list location phải ko, nhưng sao lại có xpath như vậy?
-- Code u đưa bị lỗi mấy cái ở phần dưới lẳm nên chạy ko đc, đã fix lại và up lên bản ok nhất đây.
+
+*Note: 
+1. tên biến luôn đặt in thường, ko viết in hoa (vd: list thay cho List). Sửa lại hết tất cả tên viết hoa (List_movie, Latest, Act, ...)
+2. Đã sửa language
+3. Đã fix click movie 2 - v đề là sau khi chọn thể loại này nọ thì nó chỉ hide những film ko phù hợp đi thôi, nhưng lấy list thì vẫn tồn tại.
+Nên phải lọc những movies ko thấy đc ra thì mới chọn đúng cái thứ 2
+4. Đoạn chọn rạp cgv phải nghiên cứu làm lại cho chuẩn vì cái phim nớ có thể ko chiếu ở rạp vincom DN nên ko có trong list hoặc ko chiếu ở tất cả các rạp CGV luôn.
+Đây là practice: nếu ko có rạp mình chọn thì click rạp CGV đầu tiên có chiếu, nếu ko có rạp CGV nào chiếu thì chọn cụm rạp khác, lấy cái đầu tiên có chiếu cũng đc. 
+Tham khảo cách viết if ... else ... trong code.
+
