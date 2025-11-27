@@ -47,21 +47,35 @@ Act_options= Act.find_elements (By.XPATH, '//div[@class="row"]/div[2]//a/followi
 Act_options[3].click()
 sleep (2)
 
-# Language= driver.find_element (By.XPATH,'//div[@class="row"]/div[3]//a')
-# Language_options= Language.find_elements (By.XPATH, '//div[@class="row"]/div[3]//a/following-sibling::ul//a')
-# Language_options[1].click()
-# sleep (2)
+Language= driver.find_element (By.XPATH,'//div[@class="row"]/div[3]//a[contains(text(), "Ngôn ngữ")]')
+Language.click()
+sleep (2)
+# //*[@id="app"]/div[1]/div[2]/div/div[1]/div/div[3]/div/ul/li[2]/a
+# //*[@id="app"]/div[1]/div[2]/div/div[1]/div/div[3]
+Language_options= Language.find_elements (By.XPATH, './following-sibling::ul//a')
+Language_options[1].click()
+sleep (2)
 
 # list of upcoming movies
-List_name= driver.find_elements (By.XPATH,'//div[2][contains(@class,"md-10")]')
+list_movies= driver.find_elements(By.XPATH,'//*[@id="app"]//div[@class="row grid"]//div[contains(@class,"item")]')
+# because this list is full list of movies, we need the below function to get the "visible" movies list
+list_visible_movies = []
+for movie in list_movies:
+    style_attribute = movie.get_attribute('style')
+    if style_attribute is None or 'display: none' not in style_attribute.lower():
+        list_visible_movies.append(movie)
+
 print("=== list of upcoming movies ===")
-for movie_name in List_name:
-    print("-", movie_name.text.strip())
+for movie_name in list_visible_movies:
+    print("-", movie_name.text)
 sleep (3)
 
 # Click the second movie
-if len(List_name) >= 2:
-    List_name[1].click()
+if len(list_visible_movies) >= 2:
+    second_movie_link = list_visible_movies[1].find_element(By.XPATH, './/img/..') # get <img> because only the <a> tag we want to click have it,
+    # so we get the img then get the parent - it means the a tag we want to click on.
+    # to get parent, we can use the './/img/parent::a' or './/img/..' <-- the ".." means parent.
+    second_movie_link.click()
     print("Click the second movie")
 else:
     print("There is no second movie to click")
@@ -76,15 +90,21 @@ theater_list= driver.find_elements (By.XPATH,'//*[@id="showtime-cineplex-18784"]
 print("===CGV list===")
 for theater in theater_list:
     print ("-",theater.text.strip())
-    
+
 for theater in theater_list:
     if theater.text.strip() == "CGV Vincom Đà Nẵng":
         actions = ActionChains(driver)
         actions.move_to_element(theater).click().perform()
         sleep (3)
-theater_info= driver.find_element (By.XPATH,'//*[@id="showtimes"]//a[contains(@href, "cgv-vincom-da-nang")]')
-theater_info.click()
-sleep (5)
+        # this click must follow the "if" to make sure we have CGV Vincom Đà Nẵng in list
+        vincom_dn_theater_info= driver.find_element (By.XPATH,'//*[@id="showtimes"]//a[contains(@href, "cgv-vincom-da-nang")]')
+        vincom_dn_theater_info.click()
+    else:
+        # if don't have CGV vincom DN, choose the first theatre - btw, should use "cinema" instead of "theater"
+        theater_list[1].click() # practice: make this click works.
+        first_theater_info= theater_list[1].find_element (By.XPATH,'//*[@id="showtimes"]//a')
+        first_theater_info.click()
+        sleep (5)
 
 driver.quit()
 

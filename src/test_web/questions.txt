@@ -17,11 +17,11 @@ VD: hiện tại là 23:52, thì khi click vô giờ đầu tiên trong ngày h�
 +++ Nên giờ sửa test case lại chút: thay vì lấy giờ sớm nhất của ngày hiện tại thì lấy giờ sớm nhất của ngày kế tiếp (ngày mai), bằng cách click vô cái ô ngày giờ kế tiếp,
 rồi mới lấy suất chiếu đầu tiên và click vô.
 
-++ Cần lưu ý 2 v đề:
-1. Khi màn hình nhỏ hơn 1000 px nó sẽ giấu mấy cái menu như "Rạp" đồ đi, ko thể click đc.
+==> Cần lưu ý 2 v đề:
++ Khi màn hình nhỏ hơn 1000 px nó sẽ giấu mấy cái menu như "Rạp" đồ đi, ko thể click đc.
 Nên bổ sung driver.set_window_size(1024, 800) để nó luôn cho cái màn hình luôn luôn thấy đc mấy cái menu để click vô.
 
-2. Khi dùng XPATH thì nên dùng ngoặc đơn ở ngoài, ngoặc kép ở trong. Vì khi copy từ F12 về thì nó luôn dùng "" ở trong, mình đỡ mất công phải đổi thành '' cho từng cái, phí time.
++ Khi dùng XPATH thì nên dùng ngoặc đơn ở ngoài, ngoặc kép ở trong. Vì khi copy từ F12 về thì nó luôn dùng "" ở trong, mình đỡ mất công phải đổi thành '' cho từng cái, phí time.
 VD: first_movie= driver.find_elements(By.XPATH,'//*[@id="app"]//h4[@class="card-title mb-1 name"]/a') sẽ tốt hơn là (By.XPATH,"//*[@id='app']//h4[@class='card-title mb-1 name']/a"
 ==============================
 *Test case 2:*
@@ -29,3 +29,14 @@ VD: first_movie= driver.find_elements(By.XPATH,'//*[@id="app"]//h4[@class="card-
 2. ko lấy list movie đúng--> ko click phim 2
 3. phần phía dưới viết nhưng chưa chạy đúng hoàn toàn vì bị stuck bởi những lỗi sai ở trên, nên sai thì sửa lun
 4. check phần rút gọn vì thấy rút khá phèn, mặc dù cũng ra đúng
+
+
+*Note: 
+1. tên biến luôn đặt in thường, ko viết in hoa (vd: list thay cho List). Sửa lại hết tất cả tên viết hoa (List_movie, Latest, Act, ...)
+2. Đã sửa language
+3. Đã fix click movie 2 - v đề là sau khi chọn thể loại này nọ thì nó chỉ hide những film ko phù hợp đi thôi, nhưng lấy list thì vẫn tồn tại.
+Nên phải lọc những movies ko thấy đc ra thì mới chọn đúng cái thứ 2
+4. Đoạn chọn rạp cgv phải nghiên cứu làm lại cho chuẩn vì cái phim nớ có thể ko chiếu ở rạp vincom DN nên ko có trong list hoặc ko chiếu ở tất cả các rạp CGV luôn.
+Đây là practice: nếu ko có rạp mình chọn thì click rạp CGV đầu tiên có chiếu, nếu ko có rạp CGV nào chiếu thì chọn cụm rạp khác, lấy cái đầu tiên có chiếu cũng đc. 
+Tham khảo cách viết if ... else ... trong code.
+
