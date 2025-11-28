@@ -21,7 +21,7 @@ sleep(5)
 List_movie= driver.find_element (By.XPATH,'//li[3]/ul')
 movie_items= List_movie.find_elements (By.XPATH,'./li')
 
-print("=== Danh sách Option ===")
+print("=== List Option ===")
 for option in movie_items:
     print("-", option.text.strip())
 for option in movie_items:
@@ -33,27 +33,25 @@ for option in movie_items:
         break
 
 
-Latest = driver.find_element (By.XPATH,'(//div[@class="row"]//a)[1]')
-Latest.click()
+latest = driver.find_element (By.XPATH,'(//div[@class="row"]//a)[1]')
+latest.click()
 sleep (2)
-Latest_options= Latest.find_elements (By.XPATH, '(//div[@class="row"]//a)[1]/following-sibling::ul//a')
-Latest_options[0].click()
-sleep (2)
-
-Act = driver.find_element (By.XPATH,'//div[@class="row"]/div[2]//a')
-Act.click()
-sleep (2)
-Act_options= Act.find_elements (By.XPATH, '//div[@class="row"]/div[2]//a/following-sibling::ul//a')
-Act_options[3].click()
+latest_options= latest.find_elements (By.XPATH, '(//div[@class="row"]//a)[1]/following-sibling::ul//a')
+latest_options[0].click()
 sleep (2)
 
-Language= driver.find_element (By.XPATH,'//div[@class="row"]/div[3]//a[contains(text(), "Ngôn ngữ")]')
-Language.click()
+act = driver.find_element (By.XPATH,'//div[@class="row"]/div[2]//a')
+act.click()
 sleep (2)
-# //*[@id="app"]/div[1]/div[2]/div/div[1]/div/div[3]/div/ul/li[2]/a
-# //*[@id="app"]/div[1]/div[2]/div/div[1]/div/div[3]
-Language_options= Language.find_elements (By.XPATH, './following-sibling::ul//a')
-Language_options[1].click()
+act_options= act.find_elements (By.XPATH, '//div[@class="row"]/div[2]//a/following-sibling::ul//a')
+act_options[1].click()
+sleep (2)
+
+language= driver.find_element (By.XPATH,'//div[@class="row"]/div[3]//a[contains(text(), "Ngôn ngữ")]')
+language.click()
+sleep (2)
+language_options= language.find_elements (By.XPATH, './following-sibling::ul//a')
+language_options[0].click()
 sleep (2)
 
 # list of upcoming movies
@@ -62,12 +60,12 @@ list_movies= driver.find_elements(By.XPATH,'//*[@id="app"]//div[@class="row grid
 list_visible_movies = []
 for movie in list_movies:
     style_attribute = movie.get_attribute('style')
-    if style_attribute is None or 'display: none' not in style_attribute.lower():
+    if style_attribute is None or 'display: none' not in style_attribute.lower():  #Convert all text in style to lowercase to avoid errors when the page is written in a different style
         list_visible_movies.append(movie)
 
 print("=== list of upcoming movies ===")
 for movie_name in list_visible_movies:
-    print("-", movie_name.text)
+    print("-", movie_name.text.strip())
 sleep (3)
 
 # Click the second movie
@@ -79,33 +77,56 @@ if len(list_visible_movies) >= 2:
     print("Click the second movie")
 else:
     print("There is no second movie to click")
-    sleep(3)
+    sleep(5)
+
+location_dropdown= driver.find_element (By.XPATH,'//div[@class="row"]/div[@class="col"]')
+location_dropdown.click()
+sleep(3)
+dn_option = driver.find_element(By.XPATH, "//select[contains(@class,'btn-select-region')]")
+Select(dn_option).select_by_visible_text("Đà Nẵng")
+print ("Select sucessful city:DN")
+sleep(3)
+
 
 # select CGV
-CGV_button= driver.find_element (By.XPATH,'//*[@id="showtimes"]//div/a[2]')
+cimemar_list= driver.find_element (By.XPATH,'//*[@id="showtimes"]')
+if not cimemar_list:
+        print("No cinemar are found")
+sleep(3)
+
+CGV_button= driver.find_element (By.XPATH,'//a[contains(@data-cineplex, "cgv-cineplex")]') #wrong 
 CGV_button.click()
+# is_open = CGV_button.get_attribute("aria-expanded") == "true"
+# if not is_open:
+#     CGV_button.click()
+#     print("CLICK TO OPEN ")
+# else:
+#     print("ALREADY OPEN")
 sleep (3)
 
-theater_list= driver.find_elements (By.XPATH,'//*[@id="showtime-cineplex-18784"]')
+#==== cannot run ====
+CGV_cinema_list= driver.find_elements (By.XPATH,'//*[@id="showtime-cineplex-18784"]') 
 print("===CGV list===")
-for theater in theater_list:
-    print ("-",theater.text.strip())
-
-for theater in theater_list:
-    if theater.text.strip() == "CGV Vincom Đà Nẵng":
+found_vt = False     #flag to check (not found assign false)
+for cinema in CGV_cinema_list:
+    print ("-",cinema.text.strip())
+    if cinema.text.strip() == "CGV Vĩnh Trung Plaza":
         actions = ActionChains(driver)
-        actions.move_to_element(theater).click().perform()
+        actions.move_to_element(cinema).click().perform()
+        print ("Click CGV Vĩnh Trung Plaza")
         sleep (3)
-        # this click must follow the "if" to make sure we have CGV Vincom Đà Nẵng in list
-        vincom_dn_theater_info= driver.find_element (By.XPATH,'//*[@id="showtimes"]//a[contains(@href, "cgv-vincom-da-nang")]')
-        vincom_dn_theater_info.click()
-    else:
-        # if don't have CGV vincom DN, choose the first theatre - btw, should use "cinema" instead of "theater"
-        theater_list[1].click() # practice: make this click works.
-        first_theater_info= theater_list[1].find_element (By.XPATH,'//*[@id="showtimes"]//a')
-        first_theater_info.click()
+        vt_cinema_info= driver.find_element (By.XPATH,'//*[@id="showtimes"]//a[contains(@href, "cgv-vinh-trung-plaza")]')
+        vt_cinema_info.click()
         sleep (5)
+        found_vt = True   #set flag to true if found
+        break
+
+# if don't have CGV Vĩnh Trung Plaza, choose the first "cinema"
+if not found_vt:
+    first_cinema= CGV_cinema_list[0]
+    ActionChains(driver).move_to_element(first_cinema).click().perform()
+    first_cinema_info= CGV_cinema_list[0].find_element (By.XPATH,'//*[@id="showtimes"]//a')
+    first_cinema_info.click()
+    sleep (5)
 
 driver.quit()
-
-# //div[contains(@class,"row")]//div[2][contains(@class,"md-10")]
