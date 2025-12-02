@@ -40,3 +40,9 @@ Nên phải lọc những movies ko thấy đc ra thì mới chọn đúng cái 
 Đây là practice: nếu ko có rạp mình chọn thì click rạp CGV đầu tiên có chiếu, nếu ko có rạp CGV nào chiếu thì chọn cụm rạp khác, lấy cái đầu tiên có chiếu cũng đc. 
 Tham khảo cách viết if ... else ... trong code.
 
+***5. chọn location dn để có thể check case khác, đn mới có vincome hoặc vinh trung, ko chọn sao check. 
+và khi chọn thì rõ ràng vẫn có rạp CGV cho phim đó chứ ko phải ko có. nếu ko có thì đã viết khác rồi nhưng rõ ràng là có và ko click đc. 
+xem và chỉnh lại đàng hoàng tc 2
+==============================
+*Test case 3:*
+1. những cái # là sai, ngoài ra vẫn còn sai nhiều cái khác, check lại

@@ -1,0 +1,7 @@
+* Test Case: movie review
+Verify can see all the movies in "book movie tickets"
+first movie > Evaluate > Verify satisfaction and evaluate the community
+Evaluate > Verify the "Evaluate" dialog should show
+Evaluate dialog > Verify can hover on the star icon to evaluate
+Evaluate dialog > Review textarea > Input the minimum limit character > Verrify An error should show
+Evaluate dialog > Review textarea > Input a full character > Verrify Post button
