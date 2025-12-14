@@ -70,7 +70,7 @@ sleep (3)
 
 # Click the second movie
 if len(list_visible_movies) >= 2:
-    second_movie_link = list_visible_movies[1].find_element(By.XPATH, './/img/..') # get <img> because only the <a> tag we want to click have it,
+    second_movie_link = list_visible_movies[0].find_element(By.XPATH, './/img/..') # get <img> because only the <a> tag we want to click have it,
     # so we get the img then get the parent - it means the a tag we want to click on.
     # to get parent, we can use the './/img/parent::a' or './/img/..' <-- the ".." means parent.
     second_movie_link.click()
