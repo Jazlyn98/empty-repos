@@ -17,23 +17,23 @@ book_movie_tickets = driver.find_element (By.XPATH,'//*[@id="navbar"]//a[contain
 book_movie_tickets.click()
 sleep(3)
 
-list_movies = driver.find_element (By.XPATH,'//div[contains(@class,"slick-active")]')
+list_movies = driver.find_elements(By.XPATH,'//div[contains(@class,"slick-active")]') #Should be find_elements
+# without "s" it will return only the first movie in list and the code below cannot run.
 
-# movies_names = []  
-# for c in list_movies:
-#     name = c.get_attribute("id") 
-#     if name:
-#         movies_names.append(name) 
-# print("movies names")
-# for name in movies_names:
-#     print("-", name)
+
+movies_names = []  
+for c in list_movies:
+    name = c.get_attribute("title") # If we want to get "name", we cannot get "id" --> it will print out the list of movie's ids. Fix it.
+    if name:
+        movies_names.append(name) 
+print("movies names")
+for name in movies_names:
+    print("-", name)
 
 first_movie = driver.find_element (By.XPATH,'//*[@id="slick-slide00"]')
-first_movie.click()
-sleep(3)
-
-evaluate_tab= driver.find_element (By.XPATH,'//*[@id="app"]//li[3]')
-evaluate_tab.click()
+evaluate= first_movie.find_element (By.XPATH,'.//a[contains(@class,"text-success")]')
+evaluate.click()
+#@@ -37,43 +38,48 @@
 print (f"main_title:{driver.title}")
 sleep(3)
 
@@ -41,10 +41,28 @@ percent_el= driver.find_element (By.XPATH,'//span[contains(@class,"rating-percen
 print(f"percent_el: {percent_el.text}%")
 sleep(2)
 
-# review_list = driver.find_element (By.XPATH,'//*[@id="app"]//div[2][contains(@class,"card-infinite")]')
-# reviews= review_list.find_elements (By.XPATH,'')
 
-evaluate_button= driver.find_element (By.XPATH,'//a[contains(@title,"Write a review")]')
+review_list = driver.find_element (By.XPATH,'//*[@id="app"]//div[contains(@class,"card-infinite")]')
+reviews= review_list.find_elements (By.XPATH,'.//div[contains(@class,"article")]')
+
+# if there is review in the review list, print the first one. 
+# Practice: check if there is >2 reviews, print the first and second reviews.
+
+review_count = len(reviews)
+print(f"Total reviews found: {review_count}")
+if review_count == 0:
+    print("No reviews found")
+
+elif review_count == 1:
+    print("Review 1: {reviews[0].text}")
+
+else:
+    print("Review 1: {reviews[0].text}")
+    print("Review 2: {reviews[1].text}")
+
+evaluate_button= driver.find_element (By.XPATH,'//a[contains(@title,"Write a review")]') #if we want to write review, maybe we need to login first, but you've not yet logged in. Fix it.
+# you create a free account to do the login here
+# or remove the write review part and replace by other actions
 evaluate_button.click()
 sleep(2)
 
@@ -76,5 +94,3 @@ print(f"Error shows: {error_el.text}")
 review_box.clear()
 review_box.send_keys("Great movie, very enjnoynable")
 post_button.click()
-
-driver.quit()
