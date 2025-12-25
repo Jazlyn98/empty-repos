@@ -10,7 +10,7 @@ chrome_option= webdriver.ChromeOptions()
 driver= webdriver.Chrome(chrome_option)
 
 driver.get ("https://moveek.com/")
-driver.set_window_size(1024, 800)
+driver.set_window_size(1200, 1000)
 sleep(3)
 
 book_movie_tickets = driver.find_element(By.XPATH,'//*[@id="navbar"]//a[contains(@href,"/mua-ve/")]')
@@ -48,9 +48,7 @@ if len(reviews): # if there is review in the review list, print the first one.
     # Practice: check if there is >2 reviews, print the first and second reviews.
     print(f'The first review: {reviews[0].text}')
 
-evaluate_button= driver.find_element (By.XPATH,'//a[contains(@title,"Write a review")]') #if we want to write review, maybe we need to login first, but you've not yet logged in. Fix it.
-# you create a free account to do the login here
-# or remove the write review part and replace by other actions
+evaluate_button= driver.find_element (By.XPATH,'//*[@id="app"]//a[contains(@title,"Soạn đánh giá")]')
 evaluate_button.click()
 sleep(2)
 
@@ -60,7 +58,8 @@ if evaluate_modal.is_displayed():
 else:
     raise Exception("Modal not visible")
 
-rating_star= evaluate_modal.find_elements (By.XPATH,'//*[@id="movie_rating_form"]/div[1]/div)')
+rating_star= driver.find_elements(By.XPATH,'//*[@id="movie_rating_form"]//*[@class="empty-stars"]/span')
+print(f"rating_star len: {len(rating_star)}")
 if len(rating_star)>=10:
     rating_star[8].click()
     print("select rating star successfull")
@@ -80,7 +79,8 @@ print(f"Error shows: {error_el.text}")
 
 
 review_box.clear()
-review_box.send_keys("Great movie, very enjnoynable")
-post_button.click()
+# review_box.send_keys("Great movie, very enjnoynable")
+# post_button.click()
 
+print(f"Finish. Quit")
 driver.quit()
