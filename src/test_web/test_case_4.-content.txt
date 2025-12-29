@@ -1,0 +1,6 @@
+* Test Case: Verify News
+Verify all expected options appear in News
+Verify the user can select "Tv Serier" option
+Verify the movie list and display a maximum of 8 movies at a time
+Select the first movie > Verify the Related articles
+Verify the user can see the second article
