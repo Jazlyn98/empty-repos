@@ -24,7 +24,7 @@ for option in news_items:
 for option in news_items:
     if option.text.strip() == "Tv Series":
         option.click()
-        sleep(3)
+        sleep(5)
         print (f"title:{driver.title}")
         break
 
